@@ -51,11 +51,20 @@ class UserController extends Controller
     {
         $repository = $this->getRepository();
 
-        $users = $repository->findBy([], ['points' => 'desc', 'played' => 'asc']);
+        $users     = $repository->findBy([], ['points' => 'desc', 'played' => 'asc']);
+	$usersList = [];
+	
+	foreach($users as $user) {
+		$userJson['login']  = $user->getLogin();
+		$userJson['played'] = $user->getPlayed();
+		$userJson['points'] = $user->getPoints();
+
+		$usersList[] = $userJson;
+	}
 
         return $this->json([
             'status' => true,
-            'users'  => $users,
+            'users'  => $usersList,
         ]);
     }
 
@@ -113,7 +122,11 @@ class UserController extends Controller
 
         return $this->json([
             'status' => true,
-            'user'   => $user,
+            'user'   => [
+		'login'  => $user->getLogin(),
+		'played' => $user->getPlayed(),
+		'points' => $user->getPoints(),
+	    ],
         ]);
     }
 
