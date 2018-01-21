@@ -50,17 +50,17 @@ class UserController extends Controller
     public function listAction()
     {
         $repository = $this->getRepository();
-
+        /** @var User[] $users */
         $users     = $repository->findBy([], ['points' => 'desc', 'played' => 'asc']);
-	$usersList = [];
-	
-	foreach($users as $user) {
-		$userJson['login']  = $user->getLogin();
-		$userJson['played'] = $user->getPlayed();
-		$userJson['points'] = $user->getPoints();
+        $usersList = [];
 
-		$usersList[] = $userJson;
-	}
+        foreach ($users as $user) {
+            $userJson['login']  = $user->getLogin();
+            $userJson['played'] = $user->getPlayed();
+            $userJson['points'] = $user->getPoints();
+
+            $usersList[] = $userJson;
+        }
 
         return $this->json([
             'status' => true,
@@ -123,10 +123,10 @@ class UserController extends Controller
         return $this->json([
             'status' => true,
             'user'   => [
-		'login'  => $user->getLogin(),
-		'played' => $user->getPlayed(),
-		'points' => $user->getPoints(),
-	    ],
+                'login'  => $user->getLogin(),
+                'played' => $user->getPlayed(),
+                'points' => $user->getPoints(),
+            ],
         ]);
     }
 
@@ -210,7 +210,8 @@ class UserController extends Controller
 
         return $this->json([
             'status' => true,
-            'user'   => $user,
+            'played' => $user->getPlayed(),
+            'points' => $user->getPoints(),
         ]);
     }
 
