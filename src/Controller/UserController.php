@@ -44,6 +44,8 @@ class UserController extends Controller
         return $this->json([
             'status' => true,
             'id'     => $user->getId(),
+            'login'  => $user->getLogin(),
+            'points' => $user->getPoints(),
         ]);
     }
 
