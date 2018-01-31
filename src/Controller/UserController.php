@@ -34,6 +34,13 @@ class UserController extends Controller
             'pass'  => $request->request->get('pass'),
         ]);
 
+        if (!$user) {
+            return $this->json([
+                'status' => false,
+                'err'    => 'User not found',
+            ]);
+        }
+
         return $this->json([
             'status' => true,
             'id'     => $user->getId(),
